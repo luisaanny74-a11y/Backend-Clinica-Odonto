@@ -51,22 +51,22 @@ Crie e ative um ambiente virtual (recomendado):
 PowerShell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
-Instale as dependências:
 
-Bash
+Instale as dependências:
 pip install -r requirements.txt
+
 Configure as Variáveis de Ambiente:
+
 Crie um arquivo .env na raiz do projeto com base no .env.example:
 
-Ini, TOML
 PROJECT_NAME="Sistema de Triagem Odontológica"
 API_V1_STR="/api/v1"
 SECRET_KEY="sua_chave_secreta_aqui"
 ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES=480
 DATABASE_URL="mysql+pymysql://usuario:senha@localhost:3306/clinica_odonto"
-Inicie o servidor de desenvolvimento:
 
+Inicie o servidor de desenvolvimento:
 PowerShell
 $env:PYTHONPATH="."; python -m uvicorn app.main:app --reload
 Documentação da API (Swagger / ReDoc)
@@ -76,7 +76,8 @@ Swagger UI: http://127.0.0.1:8000/docs
 
 ReDoc: http://127.0.0.1:8000/redoc
 
-Módulos e Endpoints Principais
+## Módulos e Endpoints Principais
+
 /api/v1/auth: Autenticação e geração de tokens JWT.
 
 /api/v1/usuarios: Gerenciamento de professores, alunos (dentistas) e recepcionistas.
