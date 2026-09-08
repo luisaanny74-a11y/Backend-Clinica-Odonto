@@ -96,19 +96,22 @@ Antes de começar, certifique-se de ter instalado:
 
 ---
 
-##  Instalação e Configuração (Passo a Passo)
+## Instalação e Configuração (Passo a Passo)
 
-# 1. Clone o repositório
+**1. Clone o repositório**
 
-```Terminal
+```text
+- Terminal:
 git clone https://github.com/seu-usuario/backend-odonto.git
 cd backend-odonto
 ```
-```Crie e ative um ambiente virtual
+```text
+- Crie e ative um ambiente virtual:
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
-```Instale as dependências
+```text
+- Instale as dependências
 pip install -r requirements.txt
 ```
 ---
@@ -124,7 +127,8 @@ pip install -r requirements.txt
 - DATABASE_URL="mysql+pymysql://usuario:senha@localhost:3306/clinica_odonto"
 
 # 3. Inicie o servidor de desenvolvimento:
-```Terminal
+```text
+- Terminal:
 $env:PYTHONPATH="."; python -m uvicorn app.main:app --reload
 ```
 ---
