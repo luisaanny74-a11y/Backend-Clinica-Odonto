@@ -85,7 +85,7 @@ backend-odonto/
 
 ---
 
-## Pré-requisitos
+# Pré-requisitos
 
 Antes de começar, certifique-se de ter instalado:
 
