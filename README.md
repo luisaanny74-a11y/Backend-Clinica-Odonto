@@ -1,4 +1,4 @@
-## Sistema de Triagem e Anamnese - Clínica Odontológica
+# Sistema de Triagem e Anamnese - Clínica Odontológica
 
 API RESTful desenvolvida em Python com **FastAPI** e **SQLAlchemy** para gerenciamento completo de uma clínica odontológica universitária.
 
