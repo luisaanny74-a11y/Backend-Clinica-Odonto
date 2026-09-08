@@ -1,0 +1,33 @@
+import enum
+
+class PerfilUsuario(str, enum.Enum):
+    ALUNO = "ALUNO"
+    PROFESSOR = "PROFESSOR"
+    ADMIN = "ADMIN"
+
+class StatusFicha(str, enum.Enum):
+    RASCUNHO = "RASCUNHO"
+    AGUARDANDO_APROVACAO = "AGUARDANDO_APROVACAO"
+    CORRECAO_SOLICITADA = "CORRECAO_SOLICITADA"
+    APROVADA = "APROVADA"
+
+class TipoAlergia(str, enum.Enum):
+    MEDICAMENTO = "MEDICAMENTO"
+    ANESTESICO = "ANESTESICO"
+    ALIMENTO = "ALIMENTO"
+    MATERIAL = "MATERIAL"
+    OUTRA = "OUTRA"
+
+class FaceDente(str, enum.Enum):
+    VESTIBULAR = "VESTIBULAR"
+    LINGUAL = "LINGUAL"
+    PALATINA = "PALATINA"
+    MESIAL = "MESIAL"
+    DISTAL = "DISTAL"
+    OCLUSAL = "OCLUSAL"
+    INCISAL = "INCISAL"
+    DENTE_INTEIRO = "DENTE_INTEIRO"
+
+class DecisaoAprovacao(str, enum.Enum):
+    APROVADA = "APROVADA"
+    CORRECAO_SOLICITADA = "CORRECAO_SOLICITADA"
