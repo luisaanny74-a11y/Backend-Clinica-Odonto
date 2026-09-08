@@ -45,7 +45,6 @@ Este sistema foi desenvolvido para gerenciar o fluxo completo de atendimento em 
 | SQLAlchemy | - | ORM para interação com banco de dados |
 | Pydantic | v2 | Validação de dados com suporte a email-validator |
 | PyMySQL | - | Driver para MySQL |
-| psycopg2 | - | Driver para PostgreSQL |
 
 ### Segurança e Autenticação
 | Tecnologia | Descrição |
@@ -116,7 +115,7 @@ pip install -r requirements.txt
 
 # 2. Configure as variáveis de ambiente
 
-# Crie um arquivo .env na raiz do projeto com base no .env.example:
+**Crie um arquivo .env na raiz do projeto com base no .env.example:**
 - PROJECT_NAME="Sistema de Triagem Odontológica"
 - API_V1_STR="/api/v1"
 - SECRET_KEY="sua_chave_secreta_aqui"
