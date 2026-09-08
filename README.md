@@ -1,4 +1,4 @@
-# Sistema de Triagem e Anamnese - Clínica Odontológica
+## Sistema de Triagem e Anamnese - Clínica Odontológica
 
 API RESTful desenvolvida em Python com **FastAPI** e **SQLAlchemy** para gerenciamento completo de uma clínica odontológica universitária.
 
@@ -99,7 +99,7 @@ Antes de começar, certifique-se de ter instalado:
 
 ##  Instalação e Configuração (Passo a Passo)
 
-### 1. Clone o repositório
+# 1. Clone o repositório
 
 ```Terminal
 git clone https://github.com/seu-usuario/backend-odonto.git
@@ -114,15 +114,15 @@ pip install -r requirements.txt
 ```
 ---
 
-## 2. Configure as variáveis de ambiente
+# 2. Configure as variáveis de ambiente
 
 # Crie um arquivo .env na raiz do projeto com base no .env.example:
-PROJECT_NAME="Sistema de Triagem Odontológica"
-API_V1_STR="/api/v1"
-SECRET_KEY="sua_chave_secreta_aqui"
-ALGORITHM="HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES=480
-DATABASE_URL="mysql+pymysql://usuario:senha@localhost:3306/clinica_odonto"
+- PROJECT_NAME="Sistema de Triagem Odontológica"
+- API_V1_STR="/api/v1"
+- SECRET_KEY="sua_chave_secreta_aqui"
+- ALGORITHM="HS256"
+- ACCESS_TOKEN_EXPIRE_MINUTES=480
+- DATABASE_URL="mysql+pymysql://usuario:senha@localhost:3306/clinica_odonto"
 
 # 3. Inicie o servidor de desenvolvimento:
 ```Terminal
