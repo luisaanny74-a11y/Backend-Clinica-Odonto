@@ -60,10 +60,15 @@ Configure as Variáveis de Ambiente:
 Crie um arquivo .env na raiz do projeto com base no .env.example:
 
 PROJECT_NAME="Sistema de Triagem Odontológica"
+
 API_V1_STR="/api/v1"
+
 SECRET_KEY="sua_chave_secreta_aqui"
+
 ALGORITHM="HS256"
+
 ACCESS_TOKEN_EXPIRE_MINUTES=480
+
 DATABASE_URL="mysql+pymysql://usuario:senha@localhost:3306/clinica_odonto"
 
 Inicie o servidor de desenvolvimento:
