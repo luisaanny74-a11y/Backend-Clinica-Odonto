@@ -96,7 +96,7 @@ Antes de começar, certifique-se de ter instalado:
 
 ---
 
-## Instalação e Configuração (Passo a Passo)
+### Instalação e Configuração (Passo a Passo)
 
 **1. Clone o repositório**
 
@@ -116,7 +116,7 @@ pip install -r requirements.txt
 ```
 ---
 
-# 2. Configure as variáveis de ambiente
+**2. Configure as variáveis de ambiente**
 
 **Crie um arquivo .env na raiz do projeto com base no .env.example:**
 - PROJECT_NAME="Sistema de Triagem Odontológica"
@@ -126,7 +126,7 @@ pip install -r requirements.txt
 - ACCESS_TOKEN_EXPIRE_MINUTES=480
 - DATABASE_URL="mysql+pymysql://usuario:senha@localhost:3306/clinica_odonto"
 
-# 3. Inicie o servidor de desenvolvimento:
+**3. Inicie o servidor de desenvolvimento:**
 ```text
 - Terminal:
 $env:PYTHONPATH="."; python -m uvicorn app.main:app --reload
