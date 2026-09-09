@@ -17,7 +17,6 @@ API RESTful desenvolvida em Python com **FastAPI** e **SQLAlchemy** para gerenci
 - [Modelos de Dados](#modelos-de-dados)
 - [Segurança](#segurança)
 - [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ---
 
