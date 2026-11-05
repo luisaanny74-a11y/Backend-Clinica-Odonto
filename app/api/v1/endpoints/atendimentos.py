@@ -6,7 +6,7 @@ from app.core.database import get_db
 from domain.models import Atendimento, SinaisVitais, Usuario
 from domain.enums import PerfilUsuario
 from app.api.v1.schemas import AtendimentoCreate, AtendimentoResponse, SinaisVitaisCreate
-from app.api.v1.dependencies import get_current_user, check_perfil
+from app.api.v1.dependencies import check_perfil
 
 router = APIRouter()
 

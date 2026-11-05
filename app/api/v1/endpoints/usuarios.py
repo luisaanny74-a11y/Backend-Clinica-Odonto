@@ -4,10 +4,33 @@ from app.core.database import get_db
 from app.core.security import get_password_hash
 from domain.models import Usuario
 from domain.enums import PerfilUsuario
-from app.api.v1.schemas import UsuarioResponse, UsuarioCreate
+from app.api.v1.schemas import UsuarioResponse, UsuarioCreate, UsuarioStatusUpdate
 from app.api.v1.dependencies import get_current_user, check_perfil
 
 router = APIRouter()
+
+@router.get("", response_model=list[UsuarioResponse])
+def list_usuarios(
+    db: Session = Depends(get_db),
+    admin: Usuario = Depends(check_perfil([PerfilUsuario.ADMIN]))
+):
+    return db.query(Usuario).all()
+
+@router.patch("/{usuario_id}/status", response_model=UsuarioResponse)
+def update_usuario_status(
+    usuario_id: int,
+    data: UsuarioStatusUpdate,
+    db: Session = Depends(get_db),
+    admin: Usuario = Depends(check_perfil([PerfilUsuario.ADMIN]))
+):
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    if usuario is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuário não encontrado.")
+
+    usuario.ativo = data.ativo
+    db.commit()
+    db.refresh(usuario)
+    return usuario
 
 @router.get("/me", response_model=UsuarioResponse)
 def get_me(current_user: Usuario = Depends(get_current_user)):

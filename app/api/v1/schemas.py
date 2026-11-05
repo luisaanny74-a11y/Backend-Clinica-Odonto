@@ -14,6 +14,7 @@ class UsuarioResponse(BaseModel):
     email: str
     matricula: Optional[str] = None
     perfil: PerfilUsuario
+    ativo: bool
 
     class Config:
         from_attributes = True
@@ -29,6 +30,9 @@ class UsuarioCreate(BaseModel):
     senha: str
     matricula: Optional[str] = None
     perfil: PerfilUsuario
+
+class UsuarioStatusUpdate(BaseModel):
+    ativo: bool
 
 # Paciente Schemas
 class PacienteCreate(BaseModel):

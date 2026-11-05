@@ -1,3 +1,5 @@
+import unittest
+
 from fastapi.routing import APIRoute
 
 from app.api.v1.endpoints.pacientes import router
@@ -27,12 +29,13 @@ def _allowed_profiles(path: str, method: str) -> set[PerfilUsuario]:
     raise AssertionError(f"No profile checker found for {method} {path}")
 
 
-def test_reception_can_list_and_register_patients():
-    assert PerfilUsuario.RECEPCAO in _allowed_profiles("", "GET")
-    assert PerfilUsuario.RECEPCAO in _allowed_profiles("", "POST")
+class ReceptionPermissionsTest(unittest.TestCase):
+    def test_reception_can_list_and_register_patients(self):
+        self.assertIn(PerfilUsuario.RECEPCAO, _allowed_profiles("", "GET"))
+        self.assertIn(PerfilUsuario.RECEPCAO, _allowed_profiles("", "POST"))
 
-
-def test_reception_cannot_read_clinical_record():
-    assert PerfilUsuario.RECEPCAO not in _allowed_profiles(
-        "/{id}/prontuario", "GET"
-    )
+    def test_reception_cannot_read_clinical_record(self):
+        self.assertNotIn(
+            PerfilUsuario.RECEPCAO,
+            _allowed_profiles("/{id}/prontuario", "GET"),
+        )
