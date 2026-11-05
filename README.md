@@ -150,6 +150,9 @@ Após iniciar a aplicação, você pode acessar a documentação interativa gera
 - /api/v1/fichas: Registro de anamnese e triagem.
 - /api/v1/odontograma: Mapeamento visual das faces dentes e procedimentos.
 - /api/v1/atendimentos: Fluxo de agendamentos e filas de triagem.
+- GET /api/v1/especialidades: Consulta autenticada do catálogo de especialidades.
+
+No início da aplicação, o backend cria a especialidade Semiologia se ainda não existir e cria prontuários para pacientes legados que ainda não tenham um. Os IDs são gerados pelo banco.
 
   ---
 
@@ -162,3 +165,16 @@ echo ".env" >> .gitignore
 git add .gitignore
 git commit -m "fix: remove .env do controle de versao"
 git push origin main
+
+### Contas locais de teste
+
+Ative `SEED_TEST_USERS=true` no `.env` do backend para criar e sincronizar contas locais automaticamente. As tabelas devem estar migradas. O seed ajusta somente senha e status ativo das contas de teste listadas, usando hash bcrypt compativel com o login; nao altera perfil nem matricula. Mantenha desativado fora do ambiente local.
+
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Aluno | `aluno@uninassau.edu.br` | `aluno123` |
+| Professor | `professor@uninassau.edu.br` | `professor123` |
+| Recepcao | `recepcao@uninassau.edu.br` | `recepcao123` |
+| Admin | `admin@uninassau.edu.br` | `admin123` |
+
+O Flutter usa `POST /api/v1/auth/login` e `GET /api/v1/usuarios/me`. Configure `--dart-define=API_BASE_URL=http://localhost:8000` (no Android Emulator, use `http://10.0.2.2:8000`).

@@ -47,6 +47,10 @@ class Paciente(Base):
     medicamentos = relationship("MedicamentoPaciente", back_populates="paciente")
     condicoes_medicas = relationship("PacienteCondicaoMedica", back_populates="paciente")
 
+    @property
+    def prontuario_id(self):
+        return self.prontuario.id if self.prontuario is not None else None
+
 class Prontuario(Base):
     __tablename__ = "prontuarios"
 

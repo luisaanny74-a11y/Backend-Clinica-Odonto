@@ -18,7 +18,8 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
     if not user.ativo:
         raise HTTPException(status_code=400, detail="Usuário inativo.")
 
-    token = create_access_token({"sub": user.id, "perfil": user.perfil.value})
+    # PyJWT 2.10+ validates that the standard JWT `sub` claim is a string.
+    token = create_access_token({"sub": str(user.id), "perfil": user.perfil.value})
     return {
         "access_token": token,
         "token_type": "bearer",

@@ -1,13 +1,17 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from typing import List, Optional
 
 from app.core.database import get_db
-from domain.models import Paciente, Prontuario, Alergia, PacienteCondicaoMedica, MedicamentoPaciente, Usuario
+from domain.models import (
+    Paciente, Prontuario, Alergia, PacienteCondicaoMedica,
+    MedicamentoPaciente, Usuario
+)
 from domain.enums import PerfilUsuario
 from app.api.v1.schemas import (
     PacienteCreate, PacienteCreateResponse, PacienteResponse,
-    AlergiaCreate, CondicaoMedicaCreate, MedicamentoCreate
+    AlergiaCreate, CondicaoMedicaCreate, MedicamentoCreate,
+    ProntuarioResponse
 )
 from app.api.v1.dependencies import get_current_user, check_perfil
 
@@ -18,9 +22,14 @@ def listar_pacientes(
     busca: Optional[str] = Query(None),
     cpf: Optional[str] = Query(None),
     db: Session = Depends(get_db),
-    user: Usuario = Depends(get_current_user)
+    user: Usuario = Depends(check_perfil([
+        PerfilUsuario.ALUNO,
+        PerfilUsuario.PROFESSOR,
+        PerfilUsuario.ADMIN,
+        PerfilUsuario.RECEPCAO,
+    ]))
 ):
-    query = db.query(Paciente)
+    query = db.query(Paciente).options(selectinload(Paciente.prontuario))
     if cpf:
         query = query.filter(Paciente.cpf == cpf)
     elif busca:
@@ -31,7 +40,11 @@ def listar_pacientes(
 def cadastrar_paciente(
     data: PacienteCreate,
     db: Session = Depends(get_db),
-    user: Usuario = Depends(check_perfil([PerfilUsuario.ALUNO, PerfilUsuario.ADMIN]))
+    user: Usuario = Depends(check_perfil([
+        PerfilUsuario.ALUNO,
+        PerfilUsuario.ADMIN,
+        PerfilUsuario.RECEPCAO,
+    ]))
 ):
     if data.cpf and db.query(Paciente).filter(Paciente.cpf == data.cpf).first():
         raise HTTPException(status_code=409, detail="CPF já cadastrado no sistema.")
@@ -53,10 +66,45 @@ def cadastrar_paciente(
 
 @router.get("/{id}", response_model=PacienteResponse)
 def obter_paciente(id: int, db: Session = Depends(get_db), user: Usuario = Depends(get_current_user)):
-    paciente = db.query(Paciente).filter(Paciente.id == id).first()
+    paciente = (
+        db.query(Paciente)
+        .options(selectinload(Paciente.prontuario))
+        .filter(Paciente.id == id)
+        .first()
+    )
     if not paciente:
         raise HTTPException(status_code=404, detail="Paciente não encontrado.")
     return paciente
+
+
+@router.get("/{id}/prontuario", response_model=ProntuarioResponse)
+def obter_prontuario(
+    id: int,
+    db: Session = Depends(get_db),
+    user: Usuario = Depends(check_perfil([
+        PerfilUsuario.ALUNO,
+        PerfilUsuario.PROFESSOR,
+        PerfilUsuario.ADMIN,
+    ])),
+):
+    prontuario = (
+        db.query(Prontuario)
+        .join(Prontuario.paciente)
+        .options(
+            selectinload(Prontuario.paciente).selectinload(Paciente.prontuario),
+            selectinload(Prontuario.paciente)
+            .selectinload(Paciente.condicoes_medicas)
+            .selectinload(PacienteCondicaoMedica.condicao),
+            selectinload(Prontuario.paciente).selectinload(Paciente.alergias),
+            selectinload(Prontuario.paciente).selectinload(Paciente.medicamentos),
+            selectinload(Prontuario.atendimentos),
+        )
+        .filter(Paciente.id == id)
+        .first()
+    )
+    if prontuario is None:
+        raise HTTPException(status_code=404, detail="Prontuário não encontrado.")
+    return prontuario
 
 @router.post("/{id}/alergias", status_code=status.HTTP_201_CREATED)
 def adicionar_alergia(

@@ -46,7 +46,82 @@ class PacienteCreateResponse(BaseModel):
 
 class PacienteResponse(PacienteCreate):
     id: int
+    prontuario_id: Optional[int] = None
     criado_em: datetime
+    class Config:
+        from_attributes = True
+
+class EspecialidadeResponse(BaseModel):
+    id: int
+    nome: str
+    ativo: bool
+
+    class Config:
+        from_attributes = True
+
+class CondicaoMedicaResponse(BaseModel):
+    id: int
+    nome: str
+
+    class Config:
+        from_attributes = True
+
+class PacienteCondicaoMedicaResponse(BaseModel):
+    id: int
+    condicao_id: int
+    ativo: bool
+    observacao: Optional[str] = None
+    registrado_em: datetime
+    condicao: CondicaoMedicaResponse
+
+    class Config:
+        from_attributes = True
+
+class AlergiaResponse(BaseModel):
+    id: int
+    tipo: TipoAlergia
+    agente: str
+    reacao: Optional[str] = None
+    ativa: bool
+    criado_em: datetime
+
+    class Config:
+        from_attributes = True
+
+class MedicamentoResponse(BaseModel):
+    id: int
+    nome: str
+    dosagem: Optional[str] = None
+    frequencia: Optional[str] = None
+    observacao: Optional[str] = None
+    ativo: bool
+    criado_em: datetime
+
+    class Config:
+        from_attributes = True
+
+class ProntuarioAtendimentoResponse(BaseModel):
+    id: int
+    especialidade_id: int
+    aluno_id: int
+    iniciado_em: datetime
+    finalizado_em: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+class ProntuarioResponse(BaseModel):
+    id: int
+    paciente_id: int
+    criado_em: datetime
+    paciente: PacienteResponse
+    condicoes_medicas: List[PacienteCondicaoMedicaResponse] = Field(
+        default_factory=list
+    )
+    alergias: List[AlergiaResponse] = Field(default_factory=list)
+    medicamentos: List[MedicamentoResponse] = Field(default_factory=list)
+    atendimentos: List[ProntuarioAtendimentoResponse] = Field(default_factory=list)
+
     class Config:
         from_attributes = True
 

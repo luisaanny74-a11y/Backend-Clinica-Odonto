@@ -4,6 +4,7 @@ class PerfilUsuario(str, enum.Enum):
     ALUNO = "ALUNO"
     PROFESSOR = "PROFESSOR"
     ADMIN = "ADMIN"
+    RECEPCAO = "RECEPCAO"
 
 class StatusFicha(str, enum.Enum):
     RASCUNHO = "RASCUNHO"
